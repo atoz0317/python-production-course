@@ -1,3 +1,5 @@
+# pylint: disable=all
+
 """Project."""
 
 import json
@@ -5,7 +7,7 @@ import subprocess
 from copy import deepcopy
 from pathlib import Path
 
-from tests.consts import PROJECT_DIR
+PROJECT_DIR = (Path(__file__).parents[1] / "../").resolve()
 
 
 def initialize_git_repo(repo_dir: Path):

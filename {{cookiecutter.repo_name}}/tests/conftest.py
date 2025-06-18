@@ -1,3 +1,5 @@
+# type: ignore
+
 """Conftest."""
 
 import sys

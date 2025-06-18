@@ -1,3 +1,5 @@
+"""Project directory fixture."""
+
 import shutil
 import subprocess
 from pathlib import Path
@@ -6,11 +8,15 @@ from uuid import uuid4
 
 import pytest
 
-from tests.utils.project import generate_project, initialize_git_repo
+from tests.utils.project import (
+    generate_project,
+    initialize_git_repo,
+)
 
 
 @pytest.fixture(scope="session")
 def project_dir() -> Iterator[Path]:
+    """Project directory."""
     test_session_id = generate_test_session_id()
     template_values = {"repo_name": f"test-repo-{test_session_id}"}
     generated_repo_dir = generate_project(template_values, test_session_id=test_session_id)
@@ -23,5 +29,6 @@ def project_dir() -> Iterator[Path]:
 
 
 def generate_test_session_id() -> str:
+    """Generate session ID."""
     test_session_id = str(uuid4())[:6]
     return test_session_id

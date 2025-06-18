@@ -1,10 +1,12 @@
 """Fixtures."""
 
+from pathlib import Path
 from uuid import uuid4
 
 import pytest
 
-from tests.consts import PROJECT_DIR
+THIS_DIR = Path(__file__).parents[1]
+PROJECT_DIR = (THIS_DIR / "../").resolve()
 
 
 @pytest.fixture(scope="session")

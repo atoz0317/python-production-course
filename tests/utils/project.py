@@ -5,7 +5,8 @@ import subprocess
 from copy import deepcopy
 from pathlib import Path
 
-from tests.consts import PROJECT_DIR
+THIS_DIR = Path(__file__).parents[1]
+PROJECT_DIR = (THIS_DIR / "../").resolve()
 
 
 def initialize_git_repo(repo_dir: Path):

@@ -46,3 +46,6 @@ line-length = 119
 [tool.ruff.per-file-ignores]
 "__init__.py" = ["E402"]
 "path/to/file.py" = ["E402"]
+
+[tool.mypy]
+explicit_package_bases = true
