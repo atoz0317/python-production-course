@@ -1,4 +1,4 @@
-name: Build, Test, and Publish
+name: Build, Test
 
 on:
   pull_request:
@@ -44,8 +44,12 @@ jobs:
           python-version: 3.8
       - name: Install test dependencies
         run: |
-          pip install pytest pytest-cov ./dist/*.whl
-      - name: Lint, Format, and other static code quality checks
+          pip install pytest
+      - name: Configure git CLI
+        run: |
+          git config --global user.email "git-bot-user@python-course.com"
+          git config --global user.name "some_username"
+      - name: Run tests
         run: |
           make install
           make test

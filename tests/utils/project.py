@@ -4,6 +4,7 @@ import json
 import subprocess
 from copy import deepcopy
 from pathlib import Path
+from typing import Dict
 
 THIS_DIR = Path(__file__).parents[1]
 PROJECT_DIR = (THIS_DIR / "../").resolve()
@@ -17,7 +18,7 @@ def initialize_git_repo(repo_dir: Path):
     subprocess.run(["git", "commit", "-m", "'feat: initial commit by pytest'"], cwd=repo_dir, check=True)
 
 
-def generate_project(template_values: dict[str, str], test_session_id: str):
+def generate_project(template_values: Dict[str, str], test_session_id: str):
     """Generate project."""
     template_values = deepcopy(template_values)
     cookiecutter_config = {"default_context": template_values}
