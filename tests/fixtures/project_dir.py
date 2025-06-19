@@ -18,7 +18,10 @@ from tests.utils.project import (
 def project_dir() -> Iterator[Path]:
     """Project directory."""
     test_session_id = generate_test_session_id()
-    template_values = {"repo_name": f"test-repo-{test_session_id}"}
+    template_values = {
+        "repo_name": f"test-repo-{test_session_id}",
+        "package_import_name": f"test_package_{test_session_id}",
+    }
     generated_repo_dir = generate_project(template_values, test_session_id=test_session_id)
     try:
         initialize_git_repo(generated_repo_dir)
