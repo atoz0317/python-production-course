@@ -107,6 +107,9 @@ function push-initial-readme-to-repo {
     git branch -M main || true
     git add --all
     git commit -m "feat: create repository"
+    if [[ -n "$GH_TOKEN" ]]; then
+        git remote set-url origin "https://$GITHUB_USERNAME:$GH_TOKEN@github.com/$GITHUB_USERNAME/$REPO_NAME"
+    fi
     git push origin main
 }
 
@@ -129,7 +132,7 @@ function configure-repo {
         -F "required_status_checks[checks][][context]=lint-format-and-static-code-checks" \
         -F "required_status_checks[checks][][context]=build-wheel-and-sdist" \
         -F "required_status_checks[checks][][context]=execute-tests" \
-        -F "required_pull_request_reviews[required_approving_review_counts]=1" \
+        -F "required_pull_request_reviews[required_approving_review_counts]=0" \
         -F "enforce_admins=null" \
         -F "restrictions=null" > /dev/null
 }
@@ -180,6 +183,11 @@ EOF
 
     # commit the changes and push them to the remote feature branch
     git commit -m 'feat!: populate from `python-production-course` template'
+
+    # if GH_TOKEN is set, set the remote url to it
+    if [[ -n "$GH_TOKEN" ]]; then
+        git remote set-url origin "https://$GITHUB_USERNAME:$GH_TOKEN@github.com/$GITHUB_USERNAME/$REPO_NAME"
+    fi
     git push origin "$UNIQUE_BRANCH_NAME"
 
     # open a PR from the feature branch into main
@@ -189,6 +197,19 @@ EOF
         --base main \
         --head "$UNIQUE_BRANCH_NAME" \
         --repo "$GITHUB_USERNAME/$REPO_NAME"
+}
+
+
+function create-sample-repo {
+    git add .github/
+    git commit -m "fix: debugging the create-or-update-repo.yaml workflow"
+    git push origin main
+
+    gh workflow run .github/workflows/create-or-update-repo.yaml \
+        -f repo_name=generated_repo_3 \
+        -f package_import_name=generated_repo_3 \
+        -f is_public_repo=true \
+        --ref main
 }
 
 # print all functions in this file
